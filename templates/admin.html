@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <p>Welcome, {{ session['username'] }}</p>
+    <ul>
+        {% for user in users %}
+            <li>
+                {{ user }}
+                {% if session['username'] == 'admin' and user != 'admin' %}
+                    <form action="{{ url_for('delete_user') }}" method="post" style="display:inline;">
+                        <input type="hidden" name="user" value="{{ user }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
